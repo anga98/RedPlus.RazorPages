@@ -16,6 +16,7 @@ namespace RedPlus
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -23,17 +24,22 @@ namespace RedPlus
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage(); 
             }
+
+            //미들웨어 추가
+            app.UseStaticFiles(); //정적인 HTML, CSS, JavaScript 실행
+            //app.UseFileServer(); // 정적인 HTML 실행시 사용  "Microsoft Docs UseFileServer"
 
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!!!");
-                });
+                endpoints.MapRazorPages();
+                //endpoints.MapGet("/", async context =>
+                //{
+                //    await context.Response.WriteAsync("Hello World!!!");
+                //});
             });
         }
     }
